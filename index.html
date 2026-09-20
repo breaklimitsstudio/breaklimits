@@ -4,11 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Break Limits OS</title>
-    <meta name="description" content="Content Strategy & Script Generation Platform for Agencies">
-    <meta name="theme-color" content="#1a1a1a">
     <link rel="manifest" href="/manifest.webmanifest">
-    <link rel="icon" type="image/png" href="/icon-192.png">
-    <link rel="apple-touch-icon" href="/icon-512.png">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
@@ -19,31 +15,24 @@
             --text-primary: #ffffff;
             --text-secondary: #b0b0b0;
             --border: #333333;
-            --success: #4ade80;
             --error: #ef4444;
         }
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background: var(--bg-dark);
             color: var(--text-primary);
-            overflow-x: hidden;
         }
         .auth-container {
             display: flex;
             height: 100vh;
             background: linear-gradient(135deg, var(--bg-darker) 0%, #1f1f1f 100%);
-        }
-        .auth-panel {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 40px 20px;
         }
         .auth-form {
             width: 100%;
             max-width: 400px;
+            padding: 40px;
         }
         .auth-header {
             text-align: center;
@@ -58,10 +47,6 @@
         .auth-header h1 {
             font-size: 28px;
             margin-bottom: 8px;
-        }
-        .auth-header p {
-            color: var(--text-secondary);
-            font-size: 14px;
         }
         .form-group {
             margin-bottom: 20px;
@@ -80,7 +65,6 @@
             background: var(--bg-darker);
             color: var(--text-primary);
             font-size: 14px;
-            transition: border-color 0.2s;
         }
         .form-group input:focus {
             outline: none;
@@ -94,28 +78,19 @@
             font-size: 14px;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.2s;
+            margin-bottom: 12px;
         }
         .btn-primary {
             background: var(--primary);
             color: #000;
-            margin-bottom: 12px;
         }
         .btn-primary:hover {
             background: var(--primary-dark);
-            transform: translateY(-2px);
         }
         .btn-secondary {
             background: transparent;
             color: var(--primary);
             border: 1px solid var(--primary);
-        }
-        .btn-secondary:hover {
-            background: rgba(215, 255, 63, 0.1);
-        }
-        .btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
         }
         .toggle-auth {
             text-align: center;
@@ -126,7 +101,6 @@
         .toggle-auth a {
             color: var(--primary);
             cursor: pointer;
-            text-decoration: none;
         }
         .error-message {
             background: rgba(239, 68, 68, 0.1);
@@ -167,15 +141,6 @@
             font-size: 24px;
             margin: 0;
         }
-        .app-header-user {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-        .user-email {
-            font-size: 14px;
-            color: var(--text-secondary);
-        }
         .app-content {
             flex: 1;
             display: flex;
@@ -186,14 +151,12 @@
             background: var(--bg-darker);
             border-right: 1px solid var(--border);
             padding: 20px;
-            overflow-y: auto;
         }
         .nav-item {
             padding: 12px 16px;
             border-radius: 8px;
             cursor: pointer;
             margin-bottom: 8px;
-            transition: all 0.2s;
             color: var(--text-secondary);
             font-size: 14px;
         }
@@ -214,18 +177,16 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 24px;
+            margin-top: 40px;
         }
         .card {
             background: var(--bg-darker);
             border: 1px solid var(--border);
             border-radius: 12px;
             padding: 24px;
-            cursor: pointer;
-            transition: all 0.2s;
         }
         .card:hover {
             border-color: var(--primary);
-            transform: translateY(-4px);
         }
         .card h3 {
             font-size: 18px;
@@ -234,67 +195,35 @@
         .card p {
             color: var(--text-secondary);
             font-size: 14px;
-            line-height: 1.6;
         }
         .card .icon {
             font-size: 32px;
             margin-bottom: 12px;
         }
-        @media (max-width: 768px) {
-            .app-content {
-                flex-direction: column;
-            }
-            .sidebar {
-                width: 100%;
-                border-right: none;
-                border-bottom: 1px solid var(--border);
-                display: flex;
-                gap: 8px;
-                overflow-x: auto;
-                padding: 12px;
-            }
-            .nav-item {
-                white-space: nowrap;
-                margin-bottom: 0;
-            }
-            .main-content {
-                padding: 20px;
-            }
-            .dashboard-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-        .loading {
-            text-align: center;
-            padding: 40px;
-            color: var(--text-secondary);
-        }
     </style>
 </head>
 <body>
     <div id="authScreen" class="auth-container">
-        <div class="auth-panel">
-            <div class="auth-form">
-                <div class="auth-header">
-                    <div class="logo">BL</div>
-                    <h1 id="authTitle">Accedi</h1>
-                    <p>Gestisci i tuoi clienti e contenuti</p>
+        <div class="auth-form">
+            <div class="auth-header">
+                <div class="logo">BL</div>
+                <h1 id="authTitle">Accedi</h1>
+                <p style="color: var(--text-secondary);">Gestisci i tuoi clienti e contenuti</p>
+            </div>
+            <div id="errorMessage" class="error-message"></div>
+            <form id="authForm">
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="email" required placeholder="tuo@email.com">
                 </div>
-                <div id="errorMessage" class="error-message"></div>
-                <form id="authForm">
-                    <div class="form-group">
-                        <label>Email</label>
-                        <input type="email" id="email" required placeholder="tuo@email.com">
-                    </div>
-                    <div class="form-group">
-                        <label>Password</label>
-                        <input type="password" id="password" required placeholder="••••••••">
-                    </div>
-                    <button type="submit" class="btn btn-primary" id="authBtn">Accedi</button>
-                </form>
-                <div class="toggle-auth">
-                    Non hai un account? <a onclick="toggleAuthMode()">Registrati</a>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="password" required placeholder="••••••••">
                 </div>
+                <button type="submit" class="btn btn-primary" id="authBtn">Accedi</button>
+            </form>
+            <div class="toggle-auth">
+                Non hai un account? <a onclick="toggleAuthMode()">Registrati</a>
             </div>
         </div>
     </div>
@@ -304,9 +233,9 @@
                 <div class="logo">BL</div>
                 <div><h2>Break Limits OS</h2></div>
             </div>
-            <div class="app-header-user">
-                <div class="user-email" id="userEmail"></div>
-                <button class="btn btn-secondary" onclick="logout()" style="width: auto; padding: 8px 16px;">Logout</button>
+            <div>
+                <span id="userEmail" style="margin-right: 20px; font-size: 14px; color: var(--text-secondary);"></span>
+                <button class="btn btn-secondary" onclick="logout()" style="width: auto; padding: 8px 16px; margin: 0;">Logout</button>
             </div>
         </div>
         <div class="app-content">
@@ -315,83 +244,90 @@
                 <div class="nav-item" onclick="switchTab('clients')">👥 Clienti</div>
                 <div class="nav-item" onclick="switchTab('ideas')">💡 Idee Contenuti</div>
                 <div class="nav-item" onclick="switchTab('scripts')">📝 Script</div>
-                <div class="nav-item" onclick="switchTab('research')">🔍 Research</div>
             </div>
             <div class="main-content">
                 <div id="dashboardTab" class="tab-content">
                     <h2>Dashboard</h2>
                     <p style="color: var(--text-secondary); margin-top: 12px;">Benvenuto in Break Limits OS!</p>
-                    <div class="dashboard-grid" style="margin-top: 40px;">
-                        <div class="card"><div class="icon">👥</div><h3>Clienti</h3><p>Gestisci e organizza i tuoi clienti in un'unica piattaforma centralizzata.</p></div>
-                        <div class="card"><div class="icon">💡</div><h3>Content Ideas</h3><p>Genera idee di contenuto innovative basate sulla strategia del cliente.</p></div>
-                        <div class="card"><div class="icon">📝</div><h3>Script Generator</h3><p>Crea script pronti per social media, video e campagne marketing.</p></div>
-                        <div class="card"><div class="icon">🔍</div><h3>Research Tools</h3><p>Analizza il mercato e i competitor per strategie più efficaci.</p></div>
-                        <div class="card"><div class="icon">📊</div><h3>Analytics</h3><p>Traccia performance e risultati delle tue campagne.</p></div>
-                        <div class="card"><div class="icon">🤝</div><h3>Collaborazione</h3><p>Condividi progetti e collabora con il tuo team in tempo reale.</p></div>
+                    <div class="dashboard-grid">
+                        <div class="card"><div class="icon">👥</div><h3>Clienti</h3><p>Gestisci i tuoi clienti in una piattaforma centralizzata.</p></div>
+                        <div class="card"><div class="icon">💡</div><h3>Content Ideas</h3><p>Genera idee di contenuto innovative.</p></div>
+                        <div class="card"><div class="icon">📝</div><h3>Script Generator</h3><p>Crea script pronti per social media.</p></div>
+                        <div class="card"><div class="icon">🔍</div><h3>Research Tools</h3><p>Analizza il mercato e i competitor.</p></div>
                     </div>
                 </div>
-                <div id="clientsTab" class="tab-content" style="display: none;"><h2>I Tuoi Clienti</h2><p style="color: var(--text-secondary); margin-top: 12px;">Qui vedrai i tuoi clienti una volta integrati con Supabase.</p><div class="loading">Caricamento in corso...</div></div>
-                <div id="ideasTab" class="tab-content" style="display: none;"><h2>Idee di Contenuto</h2><p style="color: var(--text-secondary); margin-top: 12px;">Genera e gestisci le tue idee di contenuto.</p><div class="loading">Caricamento in corso...</div></div>
-                <div id="scriptsTab" class="tab-content" style="display: none;"><h2>I Tuoi Script</h2><p style="color: var(--text-secondary); margin-top: 12px;">Gestisci gli script generati per i tuoi clienti.</p><div class="loading">Caricamento in corso...</div></div>
-                <div id="researchTab" class="tab-content" style="display: none;"><h2>Research & Strategy</h2><p style="color: var(--text-secondary); margin-top: 12px;">Accedi ai tuoi report di research e strategie.</p><div class="loading">Caricamento in corso...</div></div>
+                <div id="clientsTab" class="tab-content" style="display: none;"><h2>Clienti</h2><p>Caricamento...</p></div>
+                <div id="ideasTab" class="tab-content" style="display: none;"><h2>Idee</h2><p>Caricamento...</p></div>
+                <div id="scriptsTab" class="tab-content" style="display: none;"><h2>Script</h2><p>Caricamento...</p></div>
             </div>
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
         const SUPABASE_URL = 'https://jfnjmondafdvhtfwymqh.supabase.co';
-        const SUPABASE_ANON_KEY = 'sb_publishable_CGp5eSzWFdJiQ-tpUIaCTw_QBo5SCsd';
+        const SUPABASE_KEY = 'sb_publishable_CGp5eSzWFdJiQ-tpUIaCTw_QBo5SCsd';
         const { createClient } = window.supabase;
-        const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        const supabaseClient = createClient(SUPABASE_URL, SUPABASE_KEY);
         let isSignUpMode = false;
+
         function toggleAuthMode() {
             isSignUpMode = !isSignUpMode;
             document.getElementById('authTitle').textContent = isSignUpMode ? 'Registrati' : 'Accedi';
             document.getElementById('authBtn').textContent = isSignUpMode ? 'Crea Account' : 'Accedi';
         }
+
         document.getElementById('authForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
             const errorDiv = document.getElementById('errorMessage');
             const authBtn = document.getElementById('authBtn');
+            
             errorDiv.classList.remove('show');
             authBtn.disabled = true;
+            
             try {
                 let result;
                 if (isSignUpMode) {
-                    result = await supabase.auth.signUp({ email, password });
+                    result = await supabaseClient.auth.signUp({ email, password });
                 } else {
-                    result = await supabase.auth.signInWithPassword({ email, password });
+                    result = await supabaseClient.auth.signInWithPassword({ email, password });
                 }
+                
                 if (result.error) throw result.error;
                 showApp(result.data.user);
             } catch (error) {
-                errorDiv.textContent = error.message || 'Errore durante l\'autenticazione';
+                errorDiv.textContent = error.message || 'Errore autenticazione';
                 errorDiv.classList.add('show');
             } finally {
                 authBtn.disabled = false;
             }
         });
+
         function showApp(user) {
             document.getElementById('authScreen').style.display = 'none';
             document.getElementById('appScreen').classList.add('active');
             document.getElementById('userEmail').textContent = user.email;
         }
+
         async function logout() {
-            await supabase.auth.signOut();
+            await supabaseClient.auth.signOut();
             document.getElementById('authScreen').style.display = 'flex';
             document.getElementById('appScreen').classList.remove('active');
             document.getElementById('authForm').reset();
+            isSignUpMode = false;
+            document.getElementById('authTitle').textContent = 'Accedi';
+            document.getElementById('authBtn').textContent = 'Accedi';
         }
+
         function switchTab(tabName) {
-            document.querySelectorAll('.tab-content').forEach(tab => tab.style.display = 'none');
-            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
-            const tab = document.getElementById(tabName + 'Tab');
-            if (tab) tab.style.display = 'block';
+            document.querySelectorAll('.tab-content').forEach(t => t.style.display = 'none');
+            document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+            document.getElementById(tabName + 'Tab').style.display = 'block';
             event.target.classList.add('active');
         }
-        supabase.auth.onAuthStateChanged((user) => {
+
+        supabaseClient.auth.onAuthStateChanged((user) => {
             if (user) showApp(user);
         });
     </script>
