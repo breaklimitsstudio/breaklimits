@@ -9,7 +9,6 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
             --primary: #d7ff3f;
-            --primary-dark: #a8cc33;
             --bg-dark: #0f0f0f;
             --bg-darker: #1a1a1a;
             --text-primary: #ffffff;
@@ -33,10 +32,6 @@
             width: 100%;
             max-width: 400px;
             padding: 40px;
-        }
-        .auth-header {
-            text-align: center;
-            margin-bottom: 40px;
         }
         .logo {
             font-size: 48px;
@@ -85,7 +80,7 @@
             color: #000;
         }
         .btn-primary:hover {
-            background: var(--primary-dark);
+            background: #a8cc33;
         }
         .btn-secondary {
             background: transparent;
@@ -132,13 +127,7 @@
             justify-content: space-between;
             align-items: center;
         }
-        .app-header-title {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        .app-header-title .logo {
-            font-size: 24px;
+        .app-header h2 {
             margin: 0;
         }
         .app-content {
@@ -159,10 +148,6 @@
             margin-bottom: 8px;
             color: var(--text-secondary);
             font-size: 14px;
-        }
-        .nav-item:hover {
-            background: rgba(215, 255, 63, 0.1);
-            color: var(--primary);
         }
         .nav-item.active {
             background: var(--primary);
@@ -208,7 +193,7 @@
             <div class="auth-header">
                 <div class="logo">BL</div>
                 <h1 id="authTitle">Accedi</h1>
-                <p style="color: var(--text-secondary);">Gestisci i tuoi clienti e contenuti</p>
+                <p style="color: var(--text-secondary); margin-top: 8px;">Gestisci i tuoi clienti e contenuti</p>
             </div>
             <div id="errorMessage" class="error-message"></div>
             <form id="authForm">
@@ -227,47 +212,42 @@
             </div>
         </div>
     </div>
+
     <div id="appScreen" class="app-container">
         <div class="app-header">
-            <div class="app-header-title">
-                <div class="logo">BL</div>
-                <div><h2>Break Limits OS</h2></div>
-            </div>
+            <h2>🟢 Break Limits OS</h2>
             <div>
-                <span id="userEmail" style="margin-right: 20px; font-size: 14px; color: var(--text-secondary);"></span>
+                <span id="userEmail" style="margin-right: 20px; color: var(--text-secondary);"></span>
                 <button class="btn btn-secondary" onclick="logout()" style="width: auto; padding: 8px 16px; margin: 0;">Logout</button>
             </div>
         </div>
         <div class="app-content">
             <div class="sidebar">
-                <div class="nav-item active" onclick="switchTab('dashboard')">📊 Dashboard</div>
-                <div class="nav-item" onclick="switchTab('clients')">👥 Clienti</div>
-                <div class="nav-item" onclick="switchTab('ideas')">💡 Idee Contenuti</div>
-                <div class="nav-item" onclick="switchTab('scripts')">📝 Script</div>
+                <div class="nav-item active">📊 Dashboard</div>
+                <div class="nav-item">👥 Clienti</div>
+                <div class="nav-item">💡 Content Ideas</div>
+                <div class="nav-item">📝 Script</div>
             </div>
             <div class="main-content">
-                <div id="dashboardTab" class="tab-content">
-                    <h2>Dashboard</h2>
-                    <p style="color: var(--text-secondary); margin-top: 12px;">Benvenuto in Break Limits OS!</p>
-                    <div class="dashboard-grid">
-                        <div class="card"><div class="icon">👥</div><h3>Clienti</h3><p>Gestisci i tuoi clienti in una piattaforma centralizzata.</p></div>
-                        <div class="card"><div class="icon">💡</div><h3>Content Ideas</h3><p>Genera idee di contenuto innovative.</p></div>
-                        <div class="card"><div class="icon">📝</div><h3>Script Generator</h3><p>Crea script pronti per social media.</p></div>
-                        <div class="card"><div class="icon">🔍</div><h3>Research Tools</h3><p>Analizza il mercato e i competitor.</p></div>
-                    </div>
+                <h2>Dashboard</h2>
+                <p style="color: var(--text-secondary); margin-top: 12px;">✅ Autenticazione funzionante!</p>
+                <div class="dashboard-grid">
+                    <div class="card"><div class="icon">👥</div><h3>Clienti</h3><p>Gestisci i tuoi clienti</p></div>
+                    <div class="card"><div class="icon">💡</div><h3>Content Ideas</h3><p>Genera contenuti innovativi</p></div>
+                    <div class="card"><div class="icon">📝</div><h3>Script Generator</h3><p>Crea script pronti</p></div>
+                    <div class="card"><div class="icon">🔍</div><h3>Research</h3><p>Analizza il mercato</p></div>
                 </div>
-                <div id="clientsTab" class="tab-content" style="display: none;"><h2>Clienti</h2><p>Caricamento...</p></div>
-                <div id="ideasTab" class="tab-content" style="display: none;"><h2>Idee</h2><p>Caricamento...</p></div>
-                <div id="scriptsTab" class="tab-content" style="display: none;"><h2>Script</h2><p>Caricamento...</p></div>
             </div>
         </div>
     </div>
+
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
         const SUPABASE_URL = 'https://jfnjmondafdvhtfwymqh.supabase.co';
         const SUPABASE_KEY = 'sb_publishable_CGp5eSzWFdJiQ-tpUIaCTw_QBo5SCsd';
         const { createClient } = window.supabase;
-        const supabaseClient = createClient(SUPABASE_URL, SUPABASE_KEY);
+        const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+        
         let isSignUpMode = false;
 
         function toggleAuthMode() {
@@ -285,20 +265,24 @@
             
             errorDiv.classList.remove('show');
             authBtn.disabled = true;
+            authBtn.textContent = 'In corso...';
             
             try {
                 let result;
                 if (isSignUpMode) {
-                    result = await supabaseClient.auth.signUp({ email, password });
+                    result = await supabase.auth.signUp({ email, password });
                 } else {
-                    result = await supabaseClient.auth.signInWithPassword({ email, password });
+                    result = await supabase.auth.signInWithPassword({ email, password });
                 }
                 
                 if (result.error) throw result.error;
-                showApp(result.data.user);
+                if (result.data.user) {
+                    showApp(result.data.user);
+                }
             } catch (error) {
                 errorDiv.textContent = error.message || 'Errore autenticazione';
                 errorDiv.classList.add('show');
+                authBtn.textContent = isSignUpMode ? 'Crea Account' : 'Accedi';
             } finally {
                 authBtn.disabled = false;
             }
@@ -307,11 +291,11 @@
         function showApp(user) {
             document.getElementById('authScreen').style.display = 'none';
             document.getElementById('appScreen').classList.add('active');
-            document.getElementById('userEmail').textContent = user.email;
+            document.getElementById('userEmail').textContent = '👤 ' + user.email;
         }
 
         async function logout() {
-            await supabaseClient.auth.signOut();
+            await supabase.auth.signOut();
             document.getElementById('authScreen').style.display = 'flex';
             document.getElementById('appScreen').classList.remove('active');
             document.getElementById('authForm').reset();
@@ -320,14 +304,7 @@
             document.getElementById('authBtn').textContent = 'Accedi';
         }
 
-        function switchTab(tabName) {
-            document.querySelectorAll('.tab-content').forEach(t => t.style.display = 'none');
-            document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
-            document.getElementById(tabName + 'Tab').style.display = 'block';
-            event.target.classList.add('active');
-        }
-
-        supabaseClient.auth.onAuthStateChanged((user) => {
+        supabase.auth.onAuthStateChanged((user) => {
             if (user) showApp(user);
         });
     </script>
