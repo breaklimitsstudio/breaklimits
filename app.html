@@ -37,10 +37,10 @@ button:hover { background: #a8cc33; }
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-const SUPABASE_URL = 'https://jfnjmondafdvhtfwymqh.supabase.co';
-const SUPABASE_KEY = 'sb_publishable_CGp5eSzWFdJiQ-tpUIaCTw_QBo5SCsd';
+const SB_URL = 'https://jfnjmondafdvhtfwymqh.supabase.co';
+const SB_KEY = 'sb_publishable_CGp5eSzWFdJiQ-tpUIaCTw_QBo5SCsd';
 const { createClient } = window.supabase;
-const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+const sb = createClient(SB_URL, SB_KEY);
 
 let isSignUp = false;
 
@@ -60,8 +60,8 @@ document.getElementById('authForm').addEventListener('submit', async (e) => {
   
   try {
     let result = isSignUp ? 
-      await supabase.auth.signUp({ email, password }) :
-      await supabase.auth.signInWithPassword({ email, password });
+      await sb.auth.signUp({ email, password }) :
+      await sb.auth.signInWithPassword({ email, password });
     
     if (result.error) throw result.error;
     
@@ -79,11 +79,11 @@ function showDashboard(user) {
 }
 
 async function logout() {
-  await supabase.auth.signOut();
+  await sb.auth.signOut();
   location.reload();
 }
 
-supabase.auth.onAuthStateChanged((user) => {
+sb.auth.onAuthStateChanged((user) => {
   if (user) showDashboard(user);
 });
 </script>
