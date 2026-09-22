@@ -200,7 +200,7 @@ body { background: #0f0f0f; color: white; font-family: -apple-system, BlinkMacSy
 const SB_URL = 'https://jfnjmondafdvhtfwymqh.supabase.co';
 const SB_KEY = 'sb_publishable_CGp5eSzWFdJiQ-tpUIaCTw_QBo5SCsd';
 const { createClient } = window.supabase;
-const sb = createClient(SB_URL, SB_KEY);
+const sbClient = createClient(SB_URL, SB_KEY);
 
 let isSignUp = false;
 
@@ -220,8 +220,8 @@ document.getElementById('authForm').addEventListener('submit', async (e) => {
   
   try {
     let result = isSignUp ? 
-      await sb.auth.signUp({ email, password }) :
-      await sb.auth.signInWithPassword({ email, password });
+      await sbClient.auth.signUp({ email, password }) :
+      await sbClient.auth.signInWithPassword({ email, password });
     
     if (result.error) throw result.error;
     
@@ -246,11 +246,11 @@ function switchTab(tabName) {
 }
 
 async function logout() {
-  await sb.auth.signOut();
+  await sbClient.auth.signOut();
   location.reload();
 }
 
-sb.auth.onAuthStateChanged((session) => {
+sbClient.auth.onAuthStateChanged((session) => {
   if (session?.user) showDashboard(session.user);
 });
 </script>
