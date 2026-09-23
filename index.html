@@ -249,9 +249,24 @@ async function logout() {
   await sbClient.auth.signOut();
   location.reload();
 }
+async function loadClients() {
+  const { data, error } = await sbClient
+    .from('clients')
+    .select('*')
+    .order('company_name', { ascending: true });
 
+  if (error) {
+    console.error('Errore caricamento clients:', error);
+    return;
+  }
+
+  console.log('CLIENTS DA SUPABASE:', data);
+}
 sbClient.auth.onAuthStateChanged((session) => {
-  if (session?.user) showDashboard(session.user);
+  if (session?.user) {
+  showDashboard(session.user);
+  loadClients();
+}
 });
 </script>
 </body>
