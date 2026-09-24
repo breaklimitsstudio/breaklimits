@@ -250,7 +250,30 @@ async function loadClients() {
     console.error('Errore caricamento clients:', error);
     return;
   }
+  const clientsList = document.getElementById('clientsList');
 
+  clientsList.innerHTML = '';
+
+  data.forEach(client => {
+    const initials = client.company_name
+      .split(' ')
+      .map(word => word[0])
+      .join('')
+      .substring(0, 2)
+      .toUpperCase();
+
+    clientsList.innerHTML += `
+      <div class="client-card">
+        <div class="client-icon">${initials}</div>
+        <div class="client-name">${client.company_name}</div>
+        <div class="client-location">${client.location || ''}</div>
+        <div class="client-status">${client.status || ''}</div>
+        <div class="progress-bar">
+          <div class="progress-fill"></div>
+        </div>
+      </div>
+    `;
+  });
   console.log('CLIENTS DA SUPABASE:', data);
 }
 sbClient.auth.onAuthStateChange((event, session) => {
