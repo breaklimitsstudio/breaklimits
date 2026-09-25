@@ -264,7 +264,8 @@ async function loadClients() {
       .substring(0, 2)
       .toUpperCase();
 
-    clientsList.innerHTML += `
+    clientsList.innerHTML += 
+        console.log('HTML CARD:', clientsList.innerHTML);`
       <div class="client-card">
         <div class="client-icon">${initials}</div>
         <div class="client-name">${client.company_name}</div>
