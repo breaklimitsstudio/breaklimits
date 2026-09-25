@@ -248,17 +248,6 @@ async function logout() {
   await sbClient.auth.signOut();
   location.reload();
 }
-async function loadClients() {
-  const { data, error } = await sbClient
-    .from('clients')
-    .select('*')
-    .order('company_name', { ascending: true });
-
-  if (error) {
-    console.error('Errore caricamento clients:', error);
-    return;
-  }
-
 async function loadResearch(clientId) {
   const { data, error } = await sbClient
     .from('research')
@@ -301,6 +290,18 @@ async function loadResearch(clientId) {
     </div>
   `;
 }
+
+async function loadClients() {
+  const { data, error } = await sbClient
+    .from('clients')
+    .select('*')
+    .order('company_name', { ascending: true });
+
+  if (error) {
+    console.error('Errore caricamento clients:', error);
+    return;
+  }
+
   const clientsList = document.getElementById('clientsList');
     console.log('CLIENTS LIST ELEMENT:', clientsList);
 
