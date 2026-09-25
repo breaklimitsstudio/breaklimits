@@ -329,6 +329,7 @@ sbClient.auth.onAuthStateChange((event, session) => {
   if (session?.user) {
   showDashboard(session.user);
   loadClients();
+loadResearch('RUTECH-001');
 }
 });
 </script>
