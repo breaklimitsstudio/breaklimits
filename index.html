@@ -256,6 +256,7 @@ async function loadClients() {
   clientsList.innerHTML = '';
 
   data.forEach(client => {
+      console.log('CLIENTE RENDERIZZATO:', client);
     const initials = client.company_name
       .split(' ')
       .map(word => word[0])
