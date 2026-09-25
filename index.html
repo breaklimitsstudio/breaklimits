@@ -253,7 +253,48 @@ async function loadClients() {
   if (error) {
     console.error('Errore caricamento clients:', error);
     return;
+  }async function loadResearch(clientId) {
+  const { data, error } = await sbClient
+    .from('research')
+    .select('*')
+    .eq('client_id', clientId)
+    .single();
+
+  const container = document.getElementById('researchContent');
+
+  if (error) {
+    console.error('Errore caricamento research:', error);
+    container.innerHTML = '<p>Errore nel caricamento della research.</p>';
+    return;
   }
+
+  if (!data) {
+    container.innerHTML = '<p>Nessuna research disponibile.</p>';
+    return;
+  }
+
+  container.innerHTML = `
+    <div class="section-card">
+      <h3>Mercato</h3>
+      <p>${data.market || ''}</p>
+    </div>
+
+    <div class="section-card">
+      <h3>Competitor</h3>
+      <p>${data.competitors || ''}</p>
+    </div>
+
+    <div class="section-card">
+      <h3>Competitor Winners</h3>
+      <p>${data.competitor_winners || ''}</p>
+    </div>
+
+    <div class="section-card">
+      <h3>Content Opportunities</h3>
+      <p>${data.content_opportunities || ''}</p>
+    </div>
+  `;
+}
   const clientsList = document.getElementById('clientsList');
     console.log('CLIENTS LIST ELEMENT:', clientsList);
 
