@@ -253,7 +253,9 @@ async function loadClients() {
   if (error) {
     console.error('Errore caricamento clients:', error);
     return;
-  }async function loadResearch(clientId) {
+  }
+
+async function loadResearch(clientId) {
   const { data, error } = await sbClient
     .from('research')
     .select('*')
