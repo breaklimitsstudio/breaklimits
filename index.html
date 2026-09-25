@@ -264,8 +264,7 @@ async function loadClients() {
       .substring(0, 2)
       .toUpperCase();
 
-    clientsList.innerHTML += 
-    
+    clientsList.innerHTML += `
       <div class="client-card">
         <div class="client-icon">${initials}</div>
         <div class="client-name">${client.company_name}</div>
@@ -275,7 +274,9 @@ async function loadClients() {
           <div class="progress-fill"></div>
         </div>
       </div>
-    `;    console.log('HTML CARD:', clientsList.innerHTML);`
+    `;
+
+    console.log('HTML CARD:', clientsList.innerHTML);
   });
   console.log('CLIENTS DA SUPABASE:', data);
 }
