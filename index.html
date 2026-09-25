@@ -238,6 +238,10 @@ function switchTab(tabName) {
   document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
   document.getElementById(tabName + 'Tab').style.display = 'block';
   event.target.classList.add('active');
+
+  if (tabName === 'research') {
+    loadResearch('RUTECH-001');
+  }
 }
 
 async function logout() {
