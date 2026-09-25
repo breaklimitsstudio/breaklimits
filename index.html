@@ -72,7 +72,7 @@
 <div class="section-title">WORKSPACE</div>
 <div class="nav-item active" onclick="switchTab('dashboard')">📊 Dashboard</div>
 <div class="nav-item" onclick="switchTab('clients')">👥 Clients</div>
-<div class="nav-item" onclick="switchTab('research')">🔍 Research</div>
+<div class="nav-item" onclick="switchTab('research', this)">🔍 Research</div>
 <div class="nav-item" onclick="switchTab('strategy')">📈 Strategy</div>
 <div class="nav-item" onclick="switchTab('ideas')">💡 Content Ideas</div>
 <div class="nav-item" onclick="switchTab('scripts')">📝 Scripts</div>
@@ -233,11 +233,13 @@ function showDashboard(user) {
   document.getElementById('settingsEmail').textContent = user.email;
 }
 
-function switchTab(tabName) {
+function switchTab(tabName, clickedItem) {
   document.querySelectorAll('.tab-content').forEach(t => t.style.display = 'none');
   document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
-  document.getElementById(tabName + 'Tab').style.display = 'block';
-  event.target.classList.add('active');
+
+  const targetTab = document.getElementById(tabName + 'Tab');
+  targetTab.style.display = 'block';
+  clickedItem.classList.add('active');
 
   if (tabName === 'research') {
     loadResearch('RUTECH-001');
