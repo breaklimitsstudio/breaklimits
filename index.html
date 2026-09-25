@@ -258,6 +258,10 @@ async function loadResearch(clientId) {
 
   const research = data?.[0] || null;
 
+  console.log('RESEARCH DATA:', data);
+  console.log('RESEARCH ERROR:', error);
+  console.log('RESEARCH CLIENT ID:', clientId);
+
   const container = document.getElementById('researchContent');
 
   if (error) {
