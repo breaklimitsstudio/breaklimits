@@ -234,12 +234,26 @@ function showDashboard(user) {
 }
 
 function switchTab(tabName, clickedItem) {
-  document.querySelectorAll('.tab-content').forEach(t => t.style.display = 'none');
-  document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(t => {
+    t.style.display = 'none';
+  });
+
+  document.querySelectorAll('.nav-item').forEach(i => {
+    i.classList.remove('active');
+  });
 
   const targetTab = document.getElementById(tabName + 'Tab');
+
+  if (!targetTab) {
+    console.error('TAB NON TROVATA:', tabName);
+    return;
+  }
+
   targetTab.style.display = 'block';
-  clickedItem.classList.add('active');
+
+  if (clickedItem) {
+    clickedItem.classList.add('active');
+  }
 
   if (tabName === 'research') {
     loadResearch('RUTECH-001');
