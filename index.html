@@ -157,7 +157,11 @@
       </div>
     </div>
 
-    <div id="ideasTab" class="tab-content" style="display: none;"><h2>Content Ideas - Coming Soon</h2></div>
+    <div id="ideasTab" class="tab-content" style="display: none;">
+      <h2>Content Ideas</h2>
+      <div id="ideasClientName" style="color: #999; margin-top: 6px; font-size: 14px;"></div>
+      <div id="ideasContent" style="margin-top: 20px;"><p style="color: #666;">Caricamento content ideas...</p></div>
+    </div>
     <div id="scriptsTab" class="tab-content" style="display: none;"><h2>Scripts - Coming Soon</h2></div>
     <div id="calendarTab" class="tab-content" style="display: none;"><h2>Calendar - Coming Soon</h2></div>
     <div id="performanceTab" class="tab-content" style="display: none;"><h2>Performance - Coming Soon</h2></div>
@@ -244,6 +248,10 @@
 
       if (tabName === 'strategy') {
         loadStrategy('RUTECH-001');
+      }
+
+      if (tabName === 'ideas') {
+        loadIdeas('RUTECH-001');
       }
     }
 
@@ -336,6 +344,55 @@
         <div class="section-card"><h3>Strategy Summary</h3><p>${strategy.strategy_summary || ''}</p></div>
         <div class="section-card"><h3>Strategy Date</h3><p>${strategy.strategy_date || ''}</p></div>
       `;
+    }
+
+    async function loadIdeas(clientId) {
+      const container = document.getElementById('ideasContent');
+      const clientNameContainer = document.getElementById('ideasClientName');
+
+      const { data, error } = await sbClient
+        .from('content_ideas')
+        .select('*')
+        .eq('client_id', clientId)
+        .order('idea_id', { ascending: true });
+
+      if (error) {
+        console.error('Errore caricamento content ideas:', error);
+        container.innerHTML = '<p>Errore nel caricamento delle content ideas.</p>';
+        return;
+      }
+
+      if (!data || data.length === 0) {
+        clientNameContainer.textContent = '';
+        container.innerHTML = '<p>Nessuna content idea disponibile.</p>';
+        return;
+      }
+
+      const { data: clientData, error: clientError } = await sbClient
+        .from('clients')
+        .select('company_name')
+        .eq('client_id', clientId)
+        .limit(1);
+
+      const companyName = clientData?.[0]?.company_name || clientId;
+      clientNameContainer.textContent = 'Cliente: ' + companyName;
+
+      if (clientError) console.error('Errore caricamento nome cliente:', clientError);
+
+      container.innerHTML = data.map(idea => `
+        <div class="section-card" style="margin-bottom: 16px;">
+          <h3>${idea.title || ''}</h3>
+          <p style="color: #666; font-size: 12px; margin-bottom: 16px;">${idea.idea_id || ''}</p>
+          <p><strong>Content Pillar:</strong> ${idea.content_pillar || ''}</p>
+          <p style="margin-top: 10px;"><strong>Objective:</strong> ${idea.objective || ''}</p>
+          <p style="margin-top: 10px;"><strong>Format:</strong> ${idea.format || ''}</p>
+          <p style="margin-top: 10px;"><strong>Concept:</strong> ${idea.concept || ''}</p>
+          <p style="margin-top: 10px;"><strong>Hook Direction:</strong> ${idea.hook_direction || ''}</p>
+          <p style="margin-top: 10px;"><strong>Target Emotion:</strong> ${idea.target_emotion || ''}</p>
+          <p style="margin-top: 10px;"><strong>CTA Direction:</strong> ${idea.cta_direction || ''}</p>
+          <p style="margin-top: 12px; color: #d7ff3f; font-size: 12px;"><strong>Status:</strong> ${idea.status || ''}</p>
+        </div>
+      `).join('');
     }
 
     async function loadClients() {
