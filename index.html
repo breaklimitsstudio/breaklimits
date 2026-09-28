@@ -157,6 +157,7 @@
 </div>
 <div id="researchTab" class="tab-content" style="display: none;">
   <h2>Research</h2>
+  <div id="researchClientName" style="color: #999; margin-top: 6px; font-size: 14px;"></div>
 
   <div id="researchContent" style="margin-top: 20px;">
     <p style="color: #666;">Caricamento research...</p>
@@ -266,6 +267,7 @@ async function logout() {
   await sbClient.auth.signOut();
   location.reload();
 }
+
 async function loadResearch(clientId) {
   const { data, error } = await sbClient
     .from('research')
@@ -279,6 +281,7 @@ async function loadResearch(clientId) {
   console.log('RESEARCH CLIENT ID:', clientId);
 
   const container = document.getElementById('researchContent');
+  const clientNameContainer = document.getElementById('researchClientName');
 
   if (error) {
     console.error('Errore caricamento research:', error);
@@ -287,8 +290,22 @@ async function loadResearch(clientId) {
   }
 
   if (!research) {
+    clientNameContainer.textContent = '';
     container.innerHTML = '<p>Nessuna research disponibile.</p>';
     return;
+  }
+
+  const { data: clientData, error: clientError } = await sbClient
+    .from('clients')
+    .select('company_name')
+    .eq('client_id', clientId)
+    .limit(1);
+
+  const companyName = clientData?.[0]?.company_name || clientId;
+  clientNameContainer.textContent = 'Cliente: ' + companyName;
+
+  if (clientError) {
+    console.error('Errore caricamento nome cliente:', clientError);
   }
 
   container.innerHTML = `
